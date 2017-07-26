@@ -1,0 +1,14 @@
+sudo: false
+
+language: php
+
+php:
+  - 7.0
+  - 7.1
+
+before_script:
+  - composer update -a -o
+
+script:
+  - vendor/bin/php-cs-fixer fix --dry-run -vv
+  - vendor/bin/phpunit --coverage-clover build/logs/clover.xml
