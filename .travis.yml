@@ -7,8 +7,9 @@ php:
   - 7.1
 
 before_script:
+  - phpenv config-add .travis/memcached.ini
   - composer update -a -o
 
 script:
   - vendor/bin/php-cs-fixer fix --dry-run -vv
-  - vendor/bin/phpunit --coverage-clover build/logs/clover.xml
+  - vendor/bin/phpunit
