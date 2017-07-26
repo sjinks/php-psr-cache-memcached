@@ -1,16 +1,29 @@
 checks:
-  php:
-    code_rating: true
-    duplication: true
+    php:
+        code_rating: true
+        duplication: true
 
 filter:
-  excluded_paths: [tests/*]
+    excluded_paths: [tests/*]
 
 build:
-  tests:
-    override:
-      -
-        command: 'vendor/bin/phpunit --coverage-clover=coverage.xml'
-        coverage:
-          file: 'coverage.xml'
-          format: 'clover'
+    environment:
+        postgresql: false
+        mongodb: false
+        memcached: true
+    nodes:
+        analysis:
+            project_setup:
+                override: ['true']
+            tests:
+                override: [php-scrutinizer-run]
+        tests: true
+    tests:
+        before:
+            - sudo service memcached restart
+        override:
+            -
+                command: 'vendor/bin/phpunit --coverage-clover=coverage.xml'
+                coverage:
+                    file: 'coverage.xml'
+                    format: 'clover'
