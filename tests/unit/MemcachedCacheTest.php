@@ -7,6 +7,10 @@ namespace WildWolf\Tests;
  */
 class MemcachedCacheTest extends \Cache\IntegrationTests\SimpleCacheTest
 {
+    protected $skippedTests = [
+        'testBasicUsageWithLongKey' => 'Memcached does not support very long keys',
+    ];
+
     public static function setUpBeforeClass()
     {
         $f = @fsockopen('127.0.0.1', 11211, $errno, $errstr, 3);
